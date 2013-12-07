@@ -37,7 +37,6 @@ public class ConDB {
 	
 	public static void main(String[] args) throws Exception{
 		System.out.println("mysql");
-		@SuppressWarnings("resource")
 		int year = new Scanner(System.in).nextInt();
 		Connection conn = ConDB.getConnection();
 		Statement st = conn.createStatement();

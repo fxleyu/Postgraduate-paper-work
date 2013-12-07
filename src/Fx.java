@@ -5,6 +5,7 @@ public class Fx {
 		String fx = null;
 		fx +="fx";
 		System.out.println(fx);
+		System.out.println("Hello World!!!");
 	}
 
 }
