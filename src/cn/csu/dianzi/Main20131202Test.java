@@ -23,7 +23,7 @@ public class Main20131202Test {
 		
 		UnionFind f = new UnionFind();
 		addUnionFindValue(f, content);
-		
+		System.out.println("连通分量的个数为" + f.getSetRoot().size());
 		
 		//************************************
 		//	可用数据分析结果输出
@@ -46,8 +46,20 @@ public class Main20131202Test {
 
 	private static void addUnionFindValue(UnionFind f,
 			ArrayList<String[]> content) {
-		// TODO Auto-generated method stub
-		
+		for(String[] c : content){
+			String relation = c[1]; 
+			int[] nodes = getInt(relation);
+			f.add(nodes);
+		}
+	}
+
+	private static int[] getInt(String relation) {
+		String[] temp = relation.split("  ");
+		int[] result = new int[temp.length];
+		for(int i=0; i< temp.length; i++){
+			result[i] = Integer.valueOf(temp[i]);
+		}
+		return result;
 	}
 
 	private static ArrayList<Integer> sort(ArrayList<Integer> years) {
