@@ -8,43 +8,40 @@ import fx.leyu.tools.UnionFind;
 public class Test {
 	public static void main(String[] args){
 		Xls data = new Xls("./项目申请书.xls");	// Xls类用于读取Excel文件
-		ArrayList<String> people = data.getContent(0);	// getContent(int column, int start) 读取内容
-		ArrayList<String> paper = data.getContent(1);	// column表示Excel中列数，start表示开始读的行数
 		int[] columns = new int[3];
 		columns[0] = 0;
 		columns[1] = 1;
 		columns[2] = 2;
 		ArrayList<String[]> content = data.getContent(columns, 1); //内容：人名，论文，时间
-		people = Filter.peopleFilter(people);	// 对人名进行过滤
-		paper = Filter.paperFilter(paper);		// 对论文名进行过滤
 		content = Filter.contentFilter(content);// 对内容进行过滤
 		data.close();
 		TreeMap<String, String> peopleMap = new TreeMap<String, String>();
 		TreeMap<String, String> paperMap = new TreeMap<String, String>();
-		int index = 0;
-		for(String p : people){
-			peopleMap.put(p, String.valueOf(++index));
-		}
-		index=0;
-		for(String p : paper){
-			paperMap.put(p, String.valueOf(++index));
+		int indexPeople = 0;
+		int indexPaper = 0;
+		for(String[] info : content){
+			if(!peopleMap.containsKey(info[0])){
+				peopleMap.put(info[0], String.valueOf(++indexPeople));
+			}
+			if(!paperMap.containsKey(info[1])){
+				paperMap.put(info[1], String.valueOf(++indexPaper));
+			}
 		}
 		new WXls("./people.xls").putContent(peopleMap); // 写入
 		new WXls("./paper.xls").putContent(paperMap);	// 写入
 		new WXls("./contents.xls").putContent(content); //写入
 		TreeMap<String, String> relationMap = new TreeMap<String, String>();
 		for(String[] c : content){
-			String peoplename = c[0];
-			String papername = c[1];
-			String id = peopleMap.get(peoplename);
-			String value = relationMap.get(papername);
-			if(value == null){
-				value = "";
+			String value= " "+peopleMap.get(c[0])+" ";
+			if(relationMap.containsKey(c[1])){
+				String temp = relationMap.get(c[1]);
+				if(temp.contains(value)){
+					continue;
+				}else{
+					value = temp + value;
+				}
 			}
-			if(!value.contains(" " + String.valueOf(id) + " ")){
-				value += " " + id + " ";
-			}
-			relationMap.put(papername, value);
+			relationMap.put(c[1], value);
 		}
 		new WXls("./relation.xls").putContent(relationMap);
 		UnionFind find = new UnionFind();
@@ -52,7 +49,7 @@ public class Test {
 		int max = 0;
 		ArrayList<Integer> roots = find.getSetRoot();
 		int[] nums = new int[roots.size()];
-		index = 0;
+		int index = 0;
 		int num1 = 0;
 		int num2to4 = 0;
 		int num5to16 = 0;
@@ -73,8 +70,8 @@ public class Test {
 			}
 		}
 		System.out.println("*****************************************************");
-		System.out.println("  人名数 " + people.size());
-		System.out.println("  论文数 " + paper.size());
+		System.out.println("  人名数 " + peopleMap.size());
+		System.out.println("  论文数 " + paperMap.size());
 		System.out.println("  内容总数 " + content.size() );
 		System.out.println("  关系总数 " + relationMap.keySet().size());
 		System.out.println("  连通分量个数 " + roots.size());

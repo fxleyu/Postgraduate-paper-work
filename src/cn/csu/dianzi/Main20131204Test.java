@@ -14,7 +14,7 @@ public class Main20131204Test {
 		WXls input = new WXls("./edge.xls");
 		HashMap<String, Integer> temp = new HashMap<String, Integer>();
 		for(String relation : relationSet){
-			String[] nodes = relation.trim().split(" ");
+			String[] nodes = relation.trim().split("  ");
 			for(int i = 0; i < nodes.length-1; i++){
 				for(int j = i+1; j < nodes.length; j++){
 					updateMap(nodes[i], nodes[j], temp);
@@ -24,7 +24,7 @@ public class Main20131204Test {
 		Set<String> keys = temp.keySet();
 		ArrayList<String[]> result = new ArrayList<String[]>(keys.size());
 		for(String key : keys ){
-			String[] pair = key.trim().split(" ");
+			String[] pair = key.trim().split("  ");
 			String[] edge = new String[3];
 			edge[0] = pair[0];
 			edge[1] = pair[1];
@@ -42,7 +42,7 @@ public class Main20131204Test {
 
 	private static void addFind(UnionFind f, ArrayList<String> list) {
 		for(String temp : list){
-			String[] nums = temp.trim().split(" ");
+			String[] nums = temp.trim().split("  ");
 			addValue(f, nums);
 		}
 	}
@@ -77,11 +77,12 @@ public class Main20131204Test {
 	private static void updateMap(String A, String B,
 			HashMap<String, Integer> temp) {
 		addNodes(A, B, temp);
+		addNodes(B, A, temp);
 	}
 
 	private static void addNodes(String a, String b,
 			HashMap<String, Integer> temp) {
-		String nodes =a + " " + b;
+		String nodes =a + "  " + b;
 		Integer sum = temp.get(nodes);
 		if(sum == null){
 			temp.put(nodes, 1);

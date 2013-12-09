@@ -3,6 +3,7 @@ package cn.csu.dianzi;
 import java.util.*;
 
 import cn.csu.dianzi.xls.*;
+import fx.leyu.tools.UnionFind;
 
 public class Main20131202Test {
 
@@ -19,6 +20,9 @@ public class Main20131202Test {
 		ArrayList<Integer> years = getYear(content);
 		ArrayList<Integer> people = getPeople(content);
 		
+		
+		UnionFind f = new UnionFind();
+		addUnionFindValue(f, content);
 		
 		
 		//************************************
@@ -38,6 +42,12 @@ public class Main20131202Test {
 		for(int year : years){
 			System.out.println("在" + year + "年可用论文发表数量为: " +  yearPaper.get(year));
 		}
+	}
+
+	private static void addUnionFindValue(UnionFind f,
+			ArrayList<String[]> content) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private static ArrayList<Integer> sort(ArrayList<Integer> years) {
@@ -73,7 +83,7 @@ public class Main20131202Test {
 	private static ArrayList<Integer> getPeople(ArrayList<String[]> contents) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		for(String[] content : contents){
-			String[] ids = content[1].trim().split(" ");
+			String[] ids = content[1].trim().split("  ");
 			for(String id : ids){
 				int num = Integer.valueOf(id);
 				if(!result.contains(num)){
