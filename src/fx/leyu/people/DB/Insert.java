@@ -54,7 +54,7 @@ public class Insert {
 			}
 			con.setAutoCommit(false);
 			String sql = "insert into publication  values (?,?,?,?,?,?,?,?,?,?,?,?)";
-			java.sql.PreparedStatement ps=con.prepareStatement(sql);
+			PreparedStatement ps=con.prepareStatement(sql);
 			ps.setInt(1, p.id);
 			ps.setString(2, p.title);
 			ps.setInt(3, p.startpage);
