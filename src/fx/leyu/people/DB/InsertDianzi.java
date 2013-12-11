@@ -3,6 +3,8 @@ package fx.leyu.people.DB;
 import java.sql.*;
 import java.util.*;
 
+import cn.csu.dianzi.bean.Edge;
+
 public class InsertDianzi {
 	
 	Connection con = null;
@@ -99,6 +101,21 @@ public class InsertDianzi {
 				pst.executeUpdate();
 				con.commit();
 				System.out.println(++index);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+
+	public void edge(ArrayList<Edge> edge) {
+		try{
+			Statement st = con.createStatement();
+			int index = 0;
+			for(Edge e : edge){
+				String sql = "insert into edge(Source, Target, Weight, classes) values ( " 
+							+ e.source +", " + e.target + ", " + e.weight + ", " + e.classes+ ")";
+				st.executeUpdate(sql);
+				System.out.println("这是类别为"+e.classes+"的插入数目为："+(++index));
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
