@@ -18,9 +18,7 @@ public class SelectDianzi {
 		try{
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
-			int index = 0;
 			while(rs.next()){
-				System.out.println("预测会很慢，加点标记语句。处理数目为：" + (++index));
 				Data d = new Data();
 				d.authors = rs.getString(1);
 				d.year = rs.getInt(2);

@@ -12,7 +12,9 @@ public class Edge {
 			Edge d = (Edge) o;
 			if(d.source == source && d.target == target && d.classes == classes){
 				return true;
-			}else if(d.source == target && d.target == source && d.classes == classes){}
+			}else if(d.source == target && d.target == source && d.classes == classes){
+				return true;
+			}
 		}
 		return false;	
 	}
