@@ -34,7 +34,7 @@ public class CN {
 		return time;
 	}
 
-	private double auc(int[][] A, int[][] B, int[][] sim, int n) {
+	protected double auc(int[][] A, int[][] B, int[][] sim, int n) {
 		ArrayList<Integer> ns = getNone(A, B, sim);
 		ArrayList<Integer> bs = getBs(B,sim);
 		double sum = 0;
@@ -78,7 +78,7 @@ public class CN {
 		return null;
 	}
 
-	private int[][] square(int[][] X) {
+	protected int[][] square(int[][] X) {
 		int[][] result = new int[X.length][X.length];
 		for(int i=0; i < result.length; i++){
 			for(int j=0; j<result[i].length; j++){
@@ -92,7 +92,7 @@ public class CN {
 		return result;
 	}
 
-	private void setMatrix(ArrayList<Edge> x, int[][] X) {
+	protected void setMatrix(ArrayList<Edge> x, int[][] X) {
 		for(Edge temp : x){
 			int i = transition.get(temp.a);
 			int j = transition.get(temp.b);
@@ -105,7 +105,7 @@ public class CN {
 		}
 	}
 	
-	private void setMatrix(ArrayList<Edge> x, int[][] X, int[][] T) {
+	protected void setMatrix(ArrayList<Edge> x, int[][] X, int[][] T) {
 		setMatrix(x, X);
 		remove(T, X);
 	}
@@ -124,7 +124,7 @@ public class CN {
 		}
 	}
 
-	private boolean judge(int[][] A, int[][] B) {
+	protected boolean judge(int[][] A, int[][] B) {
 		if(A.length != B.length && A[0].length != B[0].length && A.length != A[0].length){
 			System.out.println(" 出现错误！建议写入日志");
 			return false;
