@@ -1,7 +1,7 @@
 package cn.csu.dianzi.LP;
 
 import java.util.*;
-import cn.csu.dianzi.bean.Edge;
+import cn.csu.dianzi.bean.E;
 
 /**
  * 	A -> B under C
@@ -10,11 +10,11 @@ import cn.csu.dianzi.bean.Edge;
 public class TimeCN extends CN{
 	private int[][] C;
 	
-	public TimeCN(ArrayList<Edge> a, ArrayList<Edge> b) {
+	public TimeCN(ArrayList<E> a, ArrayList<E> b) {
 		super(a, b);
 	}
 	
-	public TimeCN(ArrayList<Edge> a, ArrayList<Edge> b, ArrayList<Edge> c){
+	public TimeCN(ArrayList<E> a, ArrayList<E> b, ArrayList<E> c){
 		super(a,b);
 		setMatrix(c,C);
 	}

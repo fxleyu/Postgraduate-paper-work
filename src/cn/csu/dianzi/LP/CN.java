@@ -16,7 +16,7 @@ public class CN {
 	protected HashMap<Integer, Integer> transition;
 	protected long time;
 
-	public CN(ArrayList<Edge> a, ArrayList<Edge> b){
+	public CN(ArrayList<E> a, ArrayList<E> b){
 		setMap(a, b);
 		setMatrix(a, A);
 		setMatrix(b, B, A);
@@ -92,8 +92,8 @@ public class CN {
 		return result;
 	}
 
-	protected void setMatrix(ArrayList<Edge> x, int[][] X) {
-		for(Edge temp : x){
+	protected void setMatrix(ArrayList<E> x, int[][] X) {
+		for(E temp : x){
 			int i = transition.get(temp.a);
 			int j = transition.get(temp.b);
 			if(X[i][j] == 0){
@@ -105,7 +105,7 @@ public class CN {
 		}
 	}
 	
-	protected void setMatrix(ArrayList<Edge> x, int[][] X, int[][] T) {
+	protected void setMatrix(ArrayList<E> x, int[][] X, int[][] T) {
 		setMatrix(x, X);
 		remove(T, X);
 	}
@@ -132,14 +132,14 @@ public class CN {
 		return true;
 	}
 
-	private void setMap(ArrayList<Edge> a, ArrayList<Edge> b) {
+	private void setMap(ArrayList<E> a, ArrayList<E> b) {
 		setMap(a);
 		setMap(b);
 	}
 
-	private void setMap(ArrayList<Edge> x) {
+	private void setMap(ArrayList<E> x) {
 		int index = transition.size();
-		for(Edge temp : x){
+		for(E temp : x){
 			if(!transition.containsKey(temp.a)){
 				transition.put(temp.a, index++);
 			}
