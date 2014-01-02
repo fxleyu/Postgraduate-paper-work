@@ -1,6 +1,6 @@
 package fx.leyu.tools;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 
@@ -11,100 +11,85 @@ import java.util.ArrayList;
  * */
 
 public class UnionFind {
-	int[][] data;
+	TreeMap<Integer, Integer> data;
 	int capacity;
 	int length;
 	public UnionFind(){
-		data = new int[10000][2];
-		capacity = 10000;
-		length =0;
+		data = new TreeMap<Integer, Integer>();
 	}
 	
+	public void add(int[] nodes){
+		int min = getMin(nodes);
+		add(min , min);
+		for(int node : nodes){
+			add(node, min);
+		}
+	}
+	
+	private int getMin(int[] nodes) {
+		int min = Integer.MAX_VALUE;
+		for(int node : nodes){
+			if(node < min){
+				min = node;
+			}
+		}
+		return min;
+	}
+
 	public void add(int value, int root){
 		// Value == data[i][0]
 		// Value == data[i][1]
 		// Root == data[i][0]	
 		// Root == data[i][1]	²»¿¼ÂÇ
-		int i=0;
-		while(i < length){
-			if(value == data[i][0]){
-				if(data[i][1] != root){
-					if(root > data[i][1]){
-						updateRoot(root, data[i][1]);
-					}else{
-						updateRoot(data[i][1], root);
-					}
-				}
-				break;
-			}
-			if(value == data[i][1]){
-				if(root != value){
-					updateRoot(data[i][1], root);
-				}
-				break;
-			}
-			if(root == data[i][0]){
-				if(data[i][1] != root){
-					root = data[i][1];
-				}
-			}
-			i++;
+		if(data.containsKey(root)){
+			root = data.get(root);
 		}
-		if(i == length){
-			if(capacity == length){
-				capacity += 10000;
-				int[][] temp = new int [capacity][2];
-				copy(data, temp);
-				data = temp;
+		if(data.containsKey(value)){
+			int valueRoot = data.get(value);
+			if(valueRoot > root){
+				updateRoot(valueRoot, root);
+				return;
+			}else if(valueRoot < root){
+				updateRoot(root, valueRoot);
+				return;
 			}
-			data[i][0] = value;
-			data[i][1] = root;
-			length++;
 		}
+		data.put(value, root);
 	}
 	
 	public ArrayList<Integer> getSetRoot(){
 		ArrayList<Integer> results = new ArrayList<Integer>();
-		for(int i=0; i<length; i++){
-			int temp = data[i][1];
-			if( !results.contains(temp)){
-				results.add(temp);
+		Set<Integer> temp = data.keySet();
+		for(int t : temp){
+			if(!results.contains(data.get(t))){
+				results.add(data.get(t));
 			}
 		}
 		return results;
 	}
 	
 	public int getSetNum(int root){
-		int num = 0;
-		for(int i=0; i<length; i++){
-			if(data[i][1] == root){
-				num++;
-			}
-		}
-		return num;
+		return getSetMember(root).size();
 	}
 	
 	public ArrayList<Integer> getSetMember(int root){
 		ArrayList<Integer> members = new ArrayList<Integer>();
-		for(int i=0; i<length; i++){
-			if(data[i][1] == root && !members.contains(data[i][0])){
-				members.add(data[i][0]);
+		Set<Integer> keys = data.keySet();
+		for(int key :keys){
+			if(data.get(key).equals(root)){
+				if(!members.contains(key)){
+					members.add(key);
+				}
 			}
 		}
 		return members;
 	}
-	
-	private void copy(int[][] as, int[][] bs) {
-		for(int i=0; i<as.length; i++){
-			bs[i][0] = as[i][0];
-			bs[i][1] = as[i][1];
-		}
-	}
 
 	private void updateRoot(int big, int small) {
-		for(int i=0; i< length; i++){
-			if(data[i][1] == big){
-				data[i][1] = small;
+		Set<Integer> keys = data.keySet();
+		for(int key : keys){
+			if(data.get(key).equals(big)){
+				data.put(key, small);
 			}
 		}
 	}

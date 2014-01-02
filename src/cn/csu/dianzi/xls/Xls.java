@@ -38,7 +38,6 @@ public class Xls {
 	public ArrayList<String[]> getContent(int[] columns, int start){
 		ArrayList<String[]> results = new ArrayList<String[]>();
 		for(int row =start; row < sheet.getRows(); row++){
-			System.out.println("处理第"+row+"行内容");
 			String[] temps = new String[columns.length];
 			for(int i = 0; i < columns.length; i++){
 				temps[i] = sheet.getCell(columns[i], row).getContents().trim();
@@ -60,7 +59,6 @@ public class Xls {
 		ArrayList<String> result = new ArrayList<String>();
 		int column = 2;
 		for(int row =1; row < sheet.getRows(); row++){
-			System.out.println("处理第"+row+"行内容");
 			String content = sheet.getCell(column, row).getContents().trim();
 			if(content == ""){
 				System.out.println("空");

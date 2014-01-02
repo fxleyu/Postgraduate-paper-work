@@ -3,6 +3,7 @@ package cn.csu.dianzi;
 import java.util.*;
 
 import cn.csu.dianzi.xls.*;
+import fx.leyu.tools.UnionFind;
 
 public class Main20131202Test {
 
@@ -20,6 +21,9 @@ public class Main20131202Test {
 		ArrayList<Integer> people = getPeople(content);
 		
 		
+		UnionFind f = new UnionFind();
+		addUnionFindValue(f, content);
+		System.out.println("连通分量的个数为" + f.getSetRoot().size());
 		
 		//************************************
 		//	可用数据分析结果输出
@@ -38,6 +42,24 @@ public class Main20131202Test {
 		for(int year : years){
 			System.out.println("在" + year + "年可用论文发表数量为: " +  yearPaper.get(year));
 		}
+	}
+
+	private static void addUnionFindValue(UnionFind f,
+			ArrayList<String[]> content) {
+		for(String[] c : content){
+			String relation = c[1]; 
+			int[] nodes = getInt(relation);
+			f.add(nodes);
+		}
+	}
+
+	private static int[] getInt(String relation) {
+		String[] temp = relation.split("  ");
+		int[] result = new int[temp.length];
+		for(int i=0; i< temp.length; i++){
+			result[i] = Integer.valueOf(temp[i]);
+		}
+		return result;
 	}
 
 	private static ArrayList<Integer> sort(ArrayList<Integer> years) {
@@ -73,7 +95,7 @@ public class Main20131202Test {
 	private static ArrayList<Integer> getPeople(ArrayList<String[]> contents) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		for(String[] content : contents){
-			String[] ids = content[1].trim().split(" ");
+			String[] ids = content[1].trim().split("  ");
 			for(String id : ids){
 				int num = Integer.valueOf(id);
 				if(!result.contains(num)){
